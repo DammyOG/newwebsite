@@ -1,6 +1,6 @@
 import { useEffect, useState, RefObject } from "react";
 
-export function useInView(ref: RefObject<HTMLElement>): boolean {
+export function useInView(ref: RefObject<HTMLElement | null>): boolean {
     const [isInView, setIsInView] = useState(false);
 
     useEffect(() => {
