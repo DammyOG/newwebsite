@@ -9,7 +9,7 @@ interface ProjectcompProps {
 
 const Projectcomp: React.FC<ProjectcompProps> = ({ title, description, picture, link }) => {
     return (
-        <div className="bg-teal-700 text-white p-6 rounded-lg shadow-lg w-96 h-[19rem] mx-auto transition-transform hover:scale-105">
+        <div className="bg-teal-700 text-white p-6 rounded-lg shadow-lg sm:w-72 md:w-96 h-[19rem] mx-auto transition-transform hover:scale-105">
             {/* Project Title */}
             <h2 className="text-2xl font-bold mb-4 text-center">{title}</h2>
 
