@@ -10,7 +10,7 @@ const slideInUp = {
 };
 
 const Footer: React.FC = () => {
-    const footerRef = useRef<HTMLElement>(null);
+    const footerRef = useRef<HTMLDivElement>(null);
     const isFooterInView = useInView(footerRef);
     const footerControls = useAnimation();
 
