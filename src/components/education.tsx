@@ -10,7 +10,7 @@ const Education = () => {
 
                 {/* First row */}
                 <div className="flex items-center mb-8">
-                    <p className="w-1/2 text-right pr-6 text-lg lg:text-2xl font-semibold">2024 - Current</p>
+                    <p className="w-1/2 text-right pr-6 text-lg lg:text-2xl font-semibold">August 2024 - Current</p>
                     <div className="w-1/2 pl-6 text-sm md:text-md lg:text-xl">
                         <p>BS of science, Computer Science</p>
                         <p> University of Maryland, College Park</p>
