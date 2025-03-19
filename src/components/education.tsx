@@ -2,7 +2,7 @@ import React from 'react';
 
 const Education = () => {
     return (
-        <div className=" text-white p-8  relative">
+        <div className="text-white p-8  relative">
             <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-center">Education</h2>
             <div className="relative">
                 {/* Vertical line */}

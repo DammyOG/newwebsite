@@ -14,7 +14,7 @@ export default function Home() {
     return (
         <div className="bg-[#0e0e0c] grid grid-rows-[1fr_auto] min-h-screen p-8 gap-16 font-[family-name:var(--font-geist-sans)]">
             <main className="flex flex-col gap-8 md:gap-14 row-start-1 items-center">
-                <section className="flex gap-4 items-center min-h-[40vh] lg:min-h-[60vh]">
+                <section className="grid justify-center content-center sm:items-start min-h-[40vh] lg:min-h-[60vh]">
                     <TypeAnimation
                         sequence={[
                             "Hi, I'm Dami.",
@@ -29,11 +29,12 @@ export default function Home() {
                         className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl"
                         repeat={Infinity}
                     />
+
                 </section>
-                <section className="min-h-[40vh] lg:min-h-[60vh]">
+                <section className="min-h-[40vh] lg:min-h-[60vh] grid justify-center content-center">
                     <Education />
                 </section>
-                <section className="min-h-[40vh] lg:min-h-[60vh]">
+                <section className="min-h-[40vh] lg:min-h-[60vh]  grid justify-center content-center">
                     <Projects />
                 </section>
             </main>
