@@ -1,55 +1,121 @@
 import React from "react";
+import { motion } from "framer-motion";
+import {
+    FaLinkedin,
+    FaGithub,
+    FaTwitter,
+    FaInstagram,
+    FaEnvelope
+} from "react-icons/fa";
 
 const SocialPage = () => {
+    const socialLinks = [
+        {
+            name: "LinkedIn",
+            icon: <FaLinkedin className="h-6 w-6" />,
+            url: "https://www.linkedin.com/in/dammyog/",
+            color: "from-blue-400 to-blue-600",
+            hoverColor: "group-hover:from-blue-500 group-hover:to-blue-700"
+        },
+        {
+            name: "GitHub",
+            icon: <FaGithub className="h-6 w-6" />,
+            url: "https://github.com/DammyOG",
+            color: "from-gray-600 to-gray-800",
+            hoverColor: "group-hover:from-gray-700 group-hover:to-gray-900"
+        },
+        {
+            name: "Twitter",
+            icon: <FaTwitter className="h-6 w-6" />,
+            url: "https://twitter.com/Dammy0G",
+            color: "from-blue-300 to-blue-500",
+            hoverColor: "group-hover:from-blue-400 group-hover:to-blue-600"
+        },
+        {
+            name: "Instagram",
+            icon: <FaInstagram className="h-6 w-6" />,
+            url: "https://www.instagram.com/_dammyog",
+            color: "from-pink-500 to-purple-500",
+            hoverColor: "group-hover:from-pink-600 group-hover:to-purple-600"
+        },
+        {
+            name: "Email",
+            icon: <FaEnvelope className="h-6 w-6" />,
+            url: "mailto:ogunbodedami1@gmail.com",
+            color: "from-green-400 to-emerald-600",
+            hoverColor: "group-hover:from-green-500 group-hover:to-emerald-700"
+        }
+    ];
+
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                delayChildren: 0.3,
+                staggerChildren: 0.2
+            }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { y: 20, opacity: 0 },
+        visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 300 } }
+    };
+
     return (
-        <div className="text-white pt-12 pb-12">
-            <h3 className="text-2xl mb-6 text-center">Connect with me</h3>
-            <div className="flex justify-center space-x-6">
-                <a href="https://www.linkedin.com/in/dammyog/" target="_blank" rel="noopener noreferrer">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-8 w-8"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
+        <div className="text-white py-12 max-w-4xl mx-auto">
+            <motion.h3
+                className="text-3xl md:text-4xl font-bold mb-8 text-center text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-blue-400"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+            >
+                Let's Connect
+            </motion.h3>
+
+            <motion.div
+                className="flex flex-wrap justify-center gap-4 md:gap-6"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+            >
+                {socialLinks.map((social, index) => (
+                    <motion.a
+                        key={social.name}
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group"
+                        variants={itemVariants}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
                     >
-                        <path d="M20 0h-16c-2.2 0-4 1.8-4 4v16c0 2.2 1.8 4 4 4h16c2.2 0 4-1.8 4-4v-16c0-2.2-1.8-4-4-4zm-11.6 20h-3.4v-10h3.4v10zm-1.7-11.4c-1.1 0-1.9-.8-1.9-1.8 0-1.1.9-1.8 1.9-1.8 1.1 0 1.9.8 1.9 1.8 0 1-.8 1.8-1.9 1.8zm13.3 11.4h-3.3v-5.5c0-1.3-.5-2.2-1.6-2.2-.8 0-1.3.5-1.5 1.1-.1.3-.1.7-.1 1.1v5.5h-3.3v-10h3.3v1.4c.5-.8 1.3-1.4 2.5-1.4 1.8 0 3.2 1.2 3.2 3.8v6.2z" />
-                    </svg>
+                        <div className={`flex items-center gap-3 p-3 md:p-4 rounded-lg bg-gradient-to-r ${social.color} shadow-md 
+                                      transition-all duration-300 transform hover:shadow-lg hover:-translate-y-1`}>
+                            <span className="text-white">{social.icon}</span>
+                            <span className="text-white font-medium hidden md:inline">{social.name}</span>
+                        </div>
+                    </motion.a>
+                ))}
+            </motion.div>
+
+            <motion.div
+                className="mt-12 text-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1, duration: 0.8 }}
+            >
+                <a
+                    href="/resume.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block px-6 py-3 bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 
+                             rounded-lg font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                >
+                    Download My Resume
                 </a>
-                <a href="https://github.com/DammyOG" target="_blank" rel="noopener noreferrer">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-8 w-8"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path d="M12 .5c-6.6 0-12 5.4-12 12 0 5.3 3.4 9.8 8.1 11.4.6.1.9-.2.9-.6 0-.3 0-1.1 0-2.1-3.3.7-4-1.6-4-1.6-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.1.1 1.6 1.1 1.6 1.1.9 1.5 2.4 1.1 3 .8.1-.7.4-1.1.7-1.4-2.7-.3-5.5-1.3-5.5-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.4.1-3 0 0 1-.3 3.3 1.2.9-.3 1.9-.4 2.8-.4.9 0 1.9.1 2.8.4 2.2-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.7.1 3 .8.8 1.2 1.8 1.2 3.1 0 4.5-2.8 5.5-5.5 5.8.4.3.8 1 .8 2.1 0 1.5 0 2.7 0 3.1 0 .4.3.7.9.6 4.7-1.6 8.1-6.1 8.1-11.4 0-6.6-5.4-12-12-12z" />
-                    </svg>
-                </a>
-                <a href="https://twitter.com/Dammy0G" target="_blank" rel="noopener noreferrer">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-8 w-8"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path d="M24 4.6c-.9.4-1.8.6-2.8.7 1-.6 1.7-1.5 2-2.7-.9.5-1.9.9-3 1.1-.9-.9-2.1-1.5-3.4-1.5-2.6 0-4.7 2.1-4.7 4.7 0 .4.1.9.2 1.3-3.9-.2-7.4-2-9.7-4.8-.4.7-.6 1.5-.6 2.3 0 1.6.8 3 2.1 3.8-.8 0-1.5-.2-2.1-.6v.1c0 2.3 1.6 4.2 3.7 4.6-.4.1-.9.2-1.4.2-.3 0-.7 0-1-.1.7 2.2 2.7 3.8 5.1 3.8-1.9 1.5-4.3 2.4-6.9 2.4-.4 0-.8 0-1.2-.1 2.4 1.6 5.3 2.5 8.4 2.5 10.1 0 15.6-8.4 15.6-15.6 0-.2 0-.3 0-.5 1-1.1 1.7-2.3 2.3-3.6z" />
-                    </svg>
-                </a>
-                <a href="https://www.instagram.com/_dammyog" target="_blank" rel="noopener noreferrer">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-8 w-8"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 2 .3 2.5.5.6.2 1.1.5 1.6 1 .5.5.8.9 1 1.6.2.5.4 1.3.5 2.5.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 2-.5 2.5-.2.6-.5 1.1-1 1.6-.5.5-.9.8-1.6 1-.5.2-1.3.4-2.5.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-2-.3-2.5-.5-.6-.2-1.1-.5-1.6-1-.5-.5-.8-.9-1-1.6-.2-.5-.4-1.3-.5-2.5-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.3-2 .5-2.5.2-.6.5-1.1 1-1.6.5-.5.9-.8 1.6-1 .5-.2 1.3-.4 2.5-.5 1.3-.1 1.7-.1 4.9-.1zm0-2.2c-3.3 0-3.7 0-5 .1-1.3.1-2.2.3-3 .6-.9.3-1.6.7-2.2 1.3-.6.6-1 1.3-1.3 2.2-.3.8-.5 1.7-.6 3-.1 1.3-.1 1.7-.1 5s0 3.7.1 5c.1 1.3.3 2.2.6 3 .3.9.7 1.6 1.3 2.2.6.6 1.3 1 2.2 1.3.8.3 1.7.5 3 .6 1.3.1 1.7.1 5 .1s3.7 0 5-.1c1.3-.1 2.2-.3 3-.6.9-.3 1.6-.7 2.2-1.3.6-.6 1-1.3 1.3-2.2.3-.8.5-1.7.6-3 .1-1.3.1-1.7.1-5s0-3.7-.1-5c-.1-1.3-.3-2.2-.6-3-.3-.9-.7-1.6-1.3-2.2-.6-.6-1.3-1-2.2-1.3-.8-.3-1.7-.5-3-.6-1.3-.1-1.7-.1-5-.1zm0 5.8c-3.4 0-6.2 2.7-6.2 6.2s2.7 6.2 6.2 6.2 6.2-2.7 6.2-6.2-2.8-6.2-6.2-6.2zm0 10.2c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm6.4-11.1c0 .8-.7 1.5-1.5 1.5s-1.5-.7-1.5-1.5.7-1.5 1.5-1.5 1.5.7 1.5 1.5z" />
-                    </svg>
-                </a>
-            </div>
+            </motion.div>
         </div>
     );
 };

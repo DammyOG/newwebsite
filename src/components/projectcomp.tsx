@@ -1,5 +1,6 @@
 // projectcomp.tsx
 import React from 'react';
+import { FaGithub } from 'react-icons/fa';
 
 interface ProjectcompProps {
     title: string;
@@ -10,34 +11,41 @@ interface ProjectcompProps {
 
 const Projectcomp: React.FC<ProjectcompProps> = ({ title, description, picture, link }) => {
     return (
-        <>
-            {/* GitHub Link Button */}
-            <a
-                href={link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-            >
-                <div className="bg-[#229545a8] text-white p-6 rounded-lg shadow-lg sm:w-72 md:w-80 lg:w-[18rem] xl:w-96 h-[19rem] mx-auto transition-transform hover:scale-105">
-                    {/* Project Title */}
-                    <h2 className="text-2xl font-bold mb-4 text-center">{title}</h2>
+        <div className="transition-all duration-300 hover:translate-y-[-8px] h-full">
+            <div className="bg-gradient-to-br from-[#1a2e38] to-[#0d1c25] text-white p-6 rounded-xl shadow-xl 
+                          h-full flex flex-col border border-gray-800 hover:border-green-500">
+                {/* Project Title */}
+                <h2 className="text-2xl font-bold mb-3 text-center bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-blue-400">
+                    {title}
+                </h2>
 
-                    {/* Project Image */}
+                {/* Project Image */}
+                <div className="relative overflow-hidden rounded-md mb-4 flex-shrink-0">
                     <img
                         src={picture}
                         alt={title}
-                        className="w-full h-32 object-cover rounded-md mb-4"
+                        className="w-full h-40 object-cover transform transition-transform duration-500 hover:scale-110"
                     />
-
-                    {/* Project Description */}
-                    <p className="text-lg text-gray-300 mb-4">{description}</p>
-
-
-
-
                 </div>
-            </a>
-        </>
+
+                {/* Project Description */}
+                <p className="text-lg text-gray-300 mb-4 flex-grow">{description}</p>
+
+                {/* GitHub Link Button - Only show if link exists */}
+                {link && (
+                    <a
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-auto flex items-center justify-center gap-2 bg-[#2a3e51] hover:bg-[#35526d] 
+                                 text-white py-2 px-4 rounded-md transition-all duration-300 group"
+                    >
+                        <FaGithub className="text-xl group-hover:scale-110 transition-transform" />
+                        <span>View on GitHub</span>
+                    </a>
+                )}
+            </div>
+        </div>
     );
 };
 
