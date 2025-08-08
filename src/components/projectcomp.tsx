@@ -12,20 +12,21 @@ interface ProjectcompProps {
 const Projectcomp: React.FC<ProjectcompProps> = ({ title, description, picture, link }) => {
     return (
         <div className="transition-all duration-300 hover:translate-y-[-8px] h-full">
-            <div className="bg-gradient-to-br from-[#1a2e38] to-[#0d1c25] text-white p-6 rounded-xl shadow-xl 
-                          h-full flex flex-col border border-gray-800 hover:border-green-500">
+            <div className="glass-dark text-white p-6 rounded-xl shadow-2xl shadow-black/20 
+                          h-full flex flex-col hover:shadow-green-500/10 backdrop-blur-md transition-all duration-300">
                 {/* Project Title */}
                 <h2 className="text-2xl font-bold mb-3 text-center bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-blue-400">
                     {title}
                 </h2>
 
                 {/* Project Image */}
-                <div className="relative overflow-hidden rounded-md mb-4 flex-shrink-0">
+                <div className="relative overflow-hidden rounded-lg mb-4 flex-shrink-0 border border-gray-600/20">
                     <img
                         src={picture}
                         alt={title}
                         className="w-full h-40 object-cover transform transition-transform duration-500 hover:scale-110"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
 
                 {/* Project Description */}
@@ -37,8 +38,8 @@ const Projectcomp: React.FC<ProjectcompProps> = ({ title, description, picture, 
                         href={link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-auto flex items-center justify-center gap-2 bg-[#2a3e51] hover:bg-[#35526d] 
-                                 text-white py-2 px-4 rounded-md transition-all duration-300 group"
+                        className="btn-modern mt-auto flex items-center justify-center gap-2 glass-dark hover:bg-gray-700/30 
+                                 text-white py-3 px-4 rounded-lg transition-all duration-300 group hover:shadow-lg hover:shadow-blue-500/25"
                     >
                         <FaGithub className="text-xl group-hover:scale-110 transition-transform" />
                         <span>View on GitHub</span>

@@ -86,7 +86,7 @@ const Navbar: React.FC = () => {
 
     return (
         <motion.header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'py-3 bg-[#0e0e0c]/90 backdrop-blur-md shadow-md' : 'py-5 bg-transparent'
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'py-3 glass-dark shadow-lg shadow-black/20' : 'py-5 bg-transparent'
                 }`}
             initial={{ y: -100 }}
             animate={{ y: 0 }}
@@ -124,7 +124,7 @@ const Navbar: React.FC = () => {
                         href="/resume.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="ml-2 flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 rounded-md text-white transition-all duration-300"
+                        className="btn-modern ml-2 flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 rounded-lg text-white transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25"
                     >
                         <FaFileAlt />
                         <span>Resume</span>
@@ -145,7 +145,7 @@ const Navbar: React.FC = () => {
             <AnimatePresence>
                 {isMenuOpen && (
                     <motion.div
-                        className="md:hidden fixed inset-0 bg-[#0e0e0c]/95 backdrop-blur-md pt-20 px-4"
+                        className="md:hidden fixed inset-0 glass-dark pt-20 px-4"
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
@@ -168,7 +168,7 @@ const Navbar: React.FC = () => {
                                 href="/resume.pdf"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2 px-4 py-3 mt-2 bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 rounded-md text-white transition-all duration-300"
+                                className="btn-modern flex items-center gap-2 px-4 py-3 mt-2 bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 rounded-lg text-white transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25"
                                 onClick={handleLinkClick}
                             >
                                 <FaFileAlt />

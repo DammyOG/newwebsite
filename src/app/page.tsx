@@ -30,10 +30,10 @@ export default function Home() {
     return (
         <>
             <Navbar />
-            <div className="bg-[#0e0e0c] min-h-screen overflow-x-hidden font-[family-name:var(--font-geist-sans)]">
+            <div className="gradient-bg min-h-screen overflow-x-hidden font-[family-name:var(--font-geist-sans)]">
                 {/* Hero Section */}
-                <section id="home" className="min-h-screen pt-20 flex flex-col justify-center relative">
-                    <div className="container mx-auto px-6 py-12 md:py-20">
+                <section id="home" className="min-h-screen pt-16 sm:pt-20 flex flex-col justify-center relative">
+                    <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-20">
                         <motion.div
                             className="max-w-4xl mx-auto text-center"
                             initial="hidden"
@@ -41,7 +41,7 @@ export default function Home() {
                             variants={fadeInUp}
                         >
                             <motion.div
-                                className="mb-8 inline-block p-2 bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-lg"
+                                className="mb-6 sm:mb-8 inline-block p-2 bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-lg"
                                 initial={{ scale: 0, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
                                 transition={{ delay: 0.5, duration: 0.5 }}
@@ -49,12 +49,12 @@ export default function Home() {
                                 <img
                                     src="/images/dami.png"
                                     alt="Dami Profile"
-                                    className="w-36 h-36 md:w-48 md:h-48 rounded-full object-cover border-4 border-green-500/30"
+                                    className="w-32 h-32 sm:w-36 sm:h-36 md:w-48 md:h-48 rounded-full object-cover border-4 border-green-500/30"
                                 />
                             </motion.div>
 
                             <motion.h1
-                                className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
+                                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6"
                                 variants={fadeInUp}
                             >
                                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-blue-400">
@@ -63,7 +63,7 @@ export default function Home() {
                             </motion.h1>
 
                             <motion.div
-                                className="text-xl md:text-2xl lg:text-3xl text-gray-300 mb-8"
+                                className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-300 mb-6 sm:mb-8"
                                 variants={fadeInUp}
                             >
                                 <TypeAnimation
@@ -84,7 +84,7 @@ export default function Home() {
                             </motion.div>
 
                             <motion.p
-                                className="text-lg text-gray-400 mb-10 max-w-2xl mx-auto"
+                                className="text-base sm:text-lg text-gray-400 mb-8 sm:mb-10 max-w-2xl mx-auto px-4"
                                 variants={fadeInUp}
                             >
                                 I build modern, responsive web applications with a focus on clean code,
@@ -92,20 +92,20 @@ export default function Home() {
                             </motion.p>
 
                             <motion.div
-                                className="flex flex-wrap justify-center gap-4"
+                                className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 px-4"
                                 variants={fadeInUp}
                             >
                                 <a
                                     href="#contact"
-                                    className="btn px-6 py-3 bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 
-                                            text-white font-medium rounded-md transition-all duration-300 hover:shadow-lg"
+                                    className="btn-modern px-6 py-3 bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 
+                                            text-white font-medium rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25 text-center hover:-translate-y-1"
                                 >
                                     Get in Touch
                                 </a>
                                 <a
                                     href="#projects"
-                                    className="btn px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white font-medium 
-                                            rounded-md transition-all duration-300 border border-gray-700 hover:border-gray-600"
+                                    className="btn-modern px-6 py-3 glass-dark hover:bg-gray-700/30 text-white font-medium 
+                                            rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 text-center hover:-translate-y-1"
                                 >
                                     View Projects
                                 </a>

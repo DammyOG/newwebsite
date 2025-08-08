@@ -57,7 +57,7 @@ const Education = () => {
                     </div>
 
                     {/* Details */}
-                    <div className="w-full md:w-1/2 pl-0 md:pl-8 bg-[#121a20]/40 p-4 rounded-lg border border-gray-800 hover:border-green-500/50 transition-all duration-300">
+                    <div className="w-full md:w-1/2 pl-0 md:pl-8 glass-dark p-6 rounded-xl shadow-xl shadow-black/20 hover:shadow-green-500/10 transition-all duration-300">
                         <h3 className="text-xl md:text-2xl font-semibold flex items-center gap-2">
                             <FaGraduationCap className="text-green-400" />
                             BS of Science, Computer Science
@@ -85,7 +85,7 @@ const Education = () => {
                     </div>
 
                     {/* Details */}
-                    <div className="w-full md:w-1/2 pr-0 md:pr-8 bg-[#121a20]/40 p-4 rounded-lg border border-gray-800 hover:border-blue-500/50 transition-all duration-300">
+                    <div className="w-full md:w-1/2 pr-0 md:pr-8 glass-dark p-6 rounded-xl shadow-xl shadow-black/20 hover:shadow-blue-500/10 transition-all duration-300">
                         <h3 className="text-xl md:text-2xl font-semibold flex items-center gap-2">
                             <FaGraduationCap className="text-blue-400" />
                             AS in Science, Computer Science
