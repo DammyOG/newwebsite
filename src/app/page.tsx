@@ -30,7 +30,7 @@ export default function Home() {
     return (
         <>
             <Navbar />
-            <div className="gradient-bg min-h-screen overflow-x-hidden font-[family-name:var(--font-geist-sans)]">
+            <main className="gradient-bg min-h-screen w-full font-[family-name:var(--font-geist-sans)]">
                 {/* Hero Section */}
                 <section id="home" className="min-h-screen pt-16 sm:pt-20 flex flex-col justify-center relative">
                     <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-20">
@@ -143,7 +143,7 @@ export default function Home() {
 
                 {/* Footer */}
                 <Footer />
-            </div>
+            </main>
         </>
     );
 }

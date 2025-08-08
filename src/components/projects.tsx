@@ -118,7 +118,7 @@ const ProjectsSlider: React.FC = () => {
     };
 
     return (
-        <div className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-4 py-12 overflow-hidden">
             <div className="flex flex-col md:flex-row justify-between items-center mb-8">
                 <h2 className="text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-blue-400">
                     Projects
@@ -155,6 +155,11 @@ const ProjectsSlider: React.FC = () => {
                 .slick-list {
                     margin: 0 -10px;
                     padding: 20px 0;
+                    overflow: hidden;
+                }
+                .slick-track {
+                    display: flex;
+                    align-items: stretch;
                 }
                 .custom-dots {
                     bottom: -40px;
@@ -168,7 +173,7 @@ const ProjectsSlider: React.FC = () => {
                 }
             `}</style>
 
-            <div className="relative">
+            <div className="relative overflow-hidden">
                 <Slider {...settings}>
                     {projects.map((project, index) => (
                         <div

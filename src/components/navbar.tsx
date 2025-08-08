@@ -145,7 +145,7 @@ const Navbar: React.FC = () => {
             <AnimatePresence>
                 {isMenuOpen && (
                     <motion.div
-                        className="md:hidden fixed inset-0 glass-dark pt-20 px-4"
+                        className="md:hidden fixed inset-0 glass-dark pt-20 px-4 overflow-y-auto"
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
