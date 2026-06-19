@@ -18,12 +18,25 @@ const items: EduItem[] = [
         period: "Aug 2024 — Present",
         status: "In progress",
         dot: "#4f46e5",
-        degree: "B.S. in Computer Science",
+        degree: "B.S. in Computer Science, Minor in Statistics",
         school: "University of Maryland, College Park",
         blurb:
-            "Focusing on systems, machine-learning infrastructure, and full-stack development while building real projects on the side.",
+            "Transferred in as a Computer Science major with a Statistics minor, focusing on systems, security, data, and software engineering while building real projects on the side.",
         chipBg: "var(--chip-i)",
-        coursework: ["Data Structures", "Algorithms", "Computer Systems", "Object-Oriented Programming", "Discrete Structures"],
+        coursework: [
+            "Computer Systems",
+            "Discrete Structures",
+            "Algorithms",
+            "Data Science",
+            "Programming Languages",
+            "Artificial Intelligence",
+            "Web Application Development",
+            "Computer & Network Security",
+            "Compilers",
+            "Database Design",
+            "Software Engineering",
+            "Probability & Statistics",
+        ],
     },
     {
         period: "Aug 2022 — May 2024",
@@ -33,7 +46,13 @@ const items: EduItem[] = [
         school: "Prince George's Community College",
         blurb: "Built my computer-science foundations and earned an associate degree before transferring to UMD.",
         chipBg: "var(--chip-p)",
-        coursework: ["Intro to Computer Science", "Data Structures", "Calculus I & II", "Computer Architecture"],
+        coursework: [
+            "Computer Science I & II",
+            "Programming in Java",
+            "Intro to Python",
+            "Mobile App Development",
+            "Calculus I, II & III",
+        ],
     },
 ];
 
