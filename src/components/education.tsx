@@ -88,8 +88,7 @@ export default function Education() {
                             />
                             <button
                                 onClick={() => setOpenIndex(isOpen ? null : i)}
-                                className="grid w-full cursor-pointer grid-cols-[1fr_auto] items-center gap-[18px] px-6 py-7 text-left sm:px-9"
-                                style={{ all: "unset", boxSizing: "border-box", display: "grid", width: "100%", cursor: "pointer" }}
+                                className="grid w-full cursor-pointer grid-cols-[1fr_auto] items-center gap-[18px] border-none bg-transparent px-6 py-8 text-left sm:px-9"
                             >
                                 <div>
                                     <div
@@ -136,7 +135,7 @@ export default function Education() {
                                         transition={{ duration: 0.35, ease: [0.2, 0.7, 0.2, 1] }}
                                         style={{ overflow: "hidden" }}
                                     >
-                                        <div className="px-6 pb-7 sm:px-9">
+                                        <div className="px-6 pb-8 sm:px-9">
                                             <div className="border-t pt-5" style={{ borderColor: "var(--line)" }}>
                                                 <p className="m-0 mb-4 text-[15px] font-medium leading-[1.65]" style={{ color: "var(--body)" }}>
                                                     {item.blurb}

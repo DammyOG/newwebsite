@@ -155,12 +155,6 @@ export default function Projects() {
                                         <span className="font-heading text-[60px] font-bold tracking-tight" style={{ color: "rgba(255,255,255,0.9)" }}>
                                             {p.monogram!.text}
                                         </span>
-                                        <span
-                                            className="absolute bottom-3 left-[14px] text-[11px] tracking-wide"
-                                            style={{ color: "rgba(255,255,255,0.85)", fontFamily: "ui-monospace, SF Mono, Menlo, monospace" }}
-                                        >
-                                            add screenshot →
-                                        </span>
                                     </div>
                                 )}
                             </div>
