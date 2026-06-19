@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
 
 const socials = [
     {
@@ -30,14 +31,31 @@ const reveal = {
     visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.2, 0.7, 0.2, 1] as const } },
 };
 
-export default function Contact() {
-    const [submitted, setSubmitted] = useState(false);
+type Status = "idle" | "loading" | "success" | "error";
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+export default function Contact() {
+    const [status, setStatus] = useState<Status>("idle");
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setSubmitted(true);
-        e.currentTarget.reset();
-        setTimeout(() => setSubmitted(false), 4000);
+        const form = e.currentTarget;
+        setStatus("loading");
+
+        try {
+            const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
+            const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
+            const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
+
+            await emailjs.sendForm(serviceId, templateId, form, publicKey);
+
+            setStatus("success");
+            form.reset();
+            setTimeout(() => setStatus("idle"), 4000);
+        } catch (error) {
+            console.error("Failed to send email:", error);
+            setStatus("error");
+            setTimeout(() => setStatus("idle"), 4000);
+        }
     };
 
     return (
@@ -121,6 +139,7 @@ export default function Contact() {
                             Name
                             <input
                                 type="text"
+                                name="from_name"
                                 placeholder="Your name"
                                 required
                                 className="rounded-xl border-[1.5px] px-[15px] py-[13px] text-[15px] outline-none"
@@ -131,6 +150,7 @@ export default function Contact() {
                             Email
                             <input
                                 type="email"
+                                name="from_email"
                                 placeholder="you@email.com"
                                 required
                                 className="rounded-xl border-[1.5px] px-[15px] py-[13px] text-[15px] outline-none"
@@ -142,6 +162,7 @@ export default function Contact() {
                         Message
                         <textarea
                             rows={5}
+                            name="message"
                             placeholder="Tell me about your idea…"
                             required
                             className="resize-vertical rounded-xl border-[1.5px] px-[15px] py-[13px] text-[15px] outline-none"
@@ -150,10 +171,17 @@ export default function Contact() {
                     </label>
                     <button
                         type="submit"
-                        className="font-heading rounded-[14px] border-none p-4 text-[16px] font-bold text-white transition-transform hover:-translate-y-0.5"
+                        disabled={status === "loading"}
+                        className="font-heading rounded-[14px] border-none p-4 text-[16px] font-bold text-white transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70"
                         style={{ background: "#4f46e5", boxShadow: "0 10px 26px -8px rgba(79,70,229,0.6)" }}
                     >
-                        {submitted ? "Thanks — I'll be in touch! ✓" : "Send message"}
+                        {status === "loading"
+                            ? "Sending…"
+                            : status === "success"
+                              ? "Thanks — I'll be in touch! ✓"
+                              : status === "error"
+                                ? "Something went wrong — try again"
+                                : "Send message"}
                     </button>
                 </motion.form>
             </div>
