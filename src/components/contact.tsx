@@ -1,256 +1,180 @@
-import React, { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { FaPaperPlane, FaUser, FaEnvelope, FaComment } from 'react-icons/fa';
-import emailjs from '@emailjs/browser';
+"use client";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 
-const Contact = () => {
-  const [formState, setFormState] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
+const socials = [
+    {
+        label: "LinkedIn",
+        href: "https://www.linkedin.com/in/dammyog/",
+        path: "M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z",
+    },
+    {
+        label: "GitHub",
+        href: "https://github.com/DammyOG",
+        path: "M12 .5C5.37.5 0 5.78 0 12.29c0 5.2 3.44 9.6 8.21 11.16.6.1.82-.25.82-.56v-2.17c-3.34.71-4.04-1.59-4.04-1.59-.55-1.37-1.34-1.73-1.34-1.73-1.09-.73.08-.72.08-.72 1.2.08 1.84 1.21 1.84 1.21 1.07 1.8 2.81 1.28 3.5.98.1-.76.42-1.28.76-1.57-2.67-.3-5.47-1.31-5.47-5.84 0-1.29.47-2.34 1.24-3.17-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.21a11.6 11.6 0 0 1 6.01 0c2.29-1.53 3.3-1.21 3.3-1.21.65 1.66.24 2.88.12 3.18.77.83 1.23 1.88 1.23 3.17 0 4.54-2.8 5.54-5.48 5.83.43.36.81 1.09.81 2.2v3.26c0 .31.21.67.82.56A12.01 12.01 0 0 0 24 12.29C24 5.78 18.63.5 12 .5z",
+    },
+    {
+        label: "Twitter",
+        href: "https://twitter.com/Dammy0G",
+        path: "M23.95 4.57a10 10 0 0 1-2.83.78 4.94 4.94 0 0 0 2.17-2.72c-.95.56-2 .97-3.13 1.19a4.92 4.92 0 0 0-8.39 4.49A13.97 13.97 0 0 1 1.64 3.16a4.92 4.92 0 0 0 1.52 6.57c-.8-.03-1.55-.25-2.21-.61v.06a4.93 4.93 0 0 0 3.95 4.83c-.71.19-1.45.22-2.17.08a4.93 4.93 0 0 0 4.6 3.42A9.88 9.88 0 0 1 0 19.54a13.94 13.94 0 0 0 7.55 2.21c9.05 0 14-7.5 14-14v-.64c.96-.7 1.8-1.56 2.46-2.54z",
+    },
+    {
+        label: "Instagram",
+        href: "https://www.instagram.com/_dammyog",
+        path: "M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.43-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07zm0 1.62c-3.15 0-3.52.01-4.76.07-.9.04-1.39.19-1.71.32-.43.17-.74.37-1.06.69-.32.32-.52.63-.69 1.06-.13.32-.28.81-.32 1.71-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.04.9.19 1.39.32 1.71.17.43.37.74.69 1.06.32.32.63.52 1.06.69.32.13.81.28 1.71.32 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c.9-.04 1.39-.19 1.71-.32.43-.17.74-.37 1.06-.69.32-.32.52-.63.69-1.06.13-.32.28-.81.32-1.71.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.04-.9-.19-1.39-.32-1.71a2.85 2.85 0 0 0-.69-1.06 2.85 2.85 0 0 0-1.06-.69c-.32-.13-.81-.28-1.71-.32-1.24-.06-1.61-.07-4.76-.07zm0 2.76a5.46 5.46 0 1 1 0 10.92 5.46 5.46 0 0 1 0-10.92zm0 1.62a3.84 3.84 0 1 0 0 7.68 3.84 3.84 0 0 0 0-7.68zm5.65-2.87a1.28 1.28 0 1 1 0 2.56 1.28 1.28 0 0 1 0-2.56z",
+    },
+];
 
-  const [formStatus, setFormStatus] = useState({
-    submitted: false,
-    success: false,
-    message: '',
-    loading: false,
-  });
-
-  const formRef = useRef(null);
-  const isInView = true; // You can use your useInView hook here if desired
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormState({
-      ...formState,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Set loading state
-    setFormStatus({
-      submitted: false,
-      success: false,
-      message: '',
-      loading: true
-    });
-
-    try {
-      // EmailJS configuration from environment variables
-      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
-      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
-      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
-
-      const templateParams = {
-        from_name: formState.name,
-        from_email: formState.email,
-        message: formState.message,
-        to_email: 'oluwadamilolaogunbode@gmail.com'
-      };
-
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
-
-      setFormStatus({
-        submitted: true,
-        success: true,
-        message: 'Thanks for reaching out! I\'ll get back to you soon.',
-        loading: false
-      });
-
-      // Reset form after successful submission
-      setFormState({
-        name: '',
-        email: '',
-        message: '',
-      });
-
-    } catch (error) {
-      console.error('Failed to send email:', error);
-      setFormStatus({
-        submitted: true,
-        success: false,
-        message: 'Sorry, there was an error sending your message. Please try again or email me directly.',
-        loading: false
-      });
-    }
-  };
-
-  return (
-    <section className="text-white py-16">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <motion.h2
-          className="text-4xl lg:text-5xl font-bold mb-10 text-center text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-blue-400"
-          initial={{ opacity: 0, y: -20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-          transition={{ duration: 0.7 }}
-        >
-          Get In Touch
-        </motion.h2>
-
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
-          {/* Contact Info */}
-          <motion.div
-            className="lg:w-1/3"
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-          >
-            <div className="glass-dark backdrop-blur-md p-4 sm:p-6 rounded-xl shadow-2xl shadow-black/20 h-full hover:shadow-green-500/10 transition-all duration-300">
-              <h3 className="text-2xl font-semibold mb-4">Contact Info</h3>
-
-              <div className="space-y-4 mt-6">
-                <div className="flex items-start gap-3">
-                  <div className="bg-blue-500/20 p-2 rounded-full flex-shrink-0 mt-1">
-                    <FaEnvelope className="text-blue-400" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-gray-400 text-sm">Email</p>
-                    <a
-                      href="mailto:oluwadamilolaogunbode@gmail.com"
-                      className="hover:text-blue-400 transition-colors break-all text-sm sm:text-base"
-                    >
-                      oluwadamilolaogunbode@gmail.com
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <div className="bg-green-500/20 p-2 rounded-full">
-                    <FaUser className="text-green-400" />
-                  </div>
-                  <div>
-                    <p className="text-gray-400 text-sm">Location</p>
-                    <p>Maryland, USA</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-8">
-                <p className="text-gray-300">
-                  Feel free to reach out to me for collaborations, opportunities,
-                  or just to say hello. I'm always open to discussing new projects
-                  and ideas.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Contact Form */}
-          <motion.div
-            className="lg:w-2/3"
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-          >
-            <div className="glass-dark backdrop-blur-md p-4 sm:p-6 rounded-xl shadow-2xl shadow-black/20 hover:shadow-blue-500/10 transition-all duration-300">
-              {formStatus.loading ? (
-                <motion.div
-                  className="text-center py-10"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="mx-auto w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mb-4 animate-pulse">
-                    <FaPaperPlane className="text-blue-400 text-2xl animate-pulse" />
-                  </div>
-                  <h3 className="text-2xl font-semibold text-blue-400 mb-2">Sending...</h3>
-                  <p className="text-gray-300">Please wait while your message is being sent.</p>
-                </motion.div>
-              ) : formStatus.submitted ? (
-                <motion.div
-                  className="text-center py-10"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className={`mx-auto w-16 h-16 ${formStatus.success ? 'bg-green-500/20' : 'bg-red-500/20'} rounded-full flex items-center justify-center mb-4`}>
-                    <FaPaperPlane className={`${formStatus.success ? 'text-green-400' : 'text-red-400'} text-2xl`} />
-                  </div>
-                  <h3 className={`text-2xl font-semibold ${formStatus.success ? 'text-green-400' : 'text-red-400'} mb-2`}>
-                    {formStatus.success ? 'Message Sent!' : 'Oops! Something went wrong'}
-                  </h3>
-                  <p className="text-gray-300 mb-6">{formStatus.message}</p>
-                  <button
-                    onClick={() => setFormStatus({ submitted: false, success: false, message: '', loading: false })}
-                    className={`px-5 py-2 ${formStatus.success ? 'bg-blue-600 hover:bg-blue-700' : 'bg-red-600 hover:bg-red-700'} rounded-md transition-colors`}
-                  >
-                    {formStatus.success ? 'Send Another Message' : 'Try Again'}
-                  </button>
-                </motion.div>
-              ) : (
-                <form onSubmit={handleSubmit} ref={formRef} className="space-y-6">
-                  <div>
-                    <label htmlFor="name" className="block text-gray-300 mb-2 flex items-center gap-2">
-                      <FaUser className="text-gray-400" />
-                      Your Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formState.name}
-                      onChange={handleChange}
-                      required
-                      className="w-full glass-dark border border-gray-600/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-all placeholder:text-gray-400"
-                      placeholder="John Doe"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="email" className="block text-gray-300 mb-2 flex items-center gap-2">
-                      <FaEnvelope className="text-gray-400" />
-                      Your Email
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formState.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full glass-dark border border-gray-600/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all placeholder:text-gray-400"
-                      placeholder="john@example.com"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="message" className="block text-gray-300 mb-2 flex items-center gap-2">
-                      <FaComment className="text-gray-400" />
-                      Your Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formState.message}
-                      onChange={handleChange}
-                      required
-                      rows={5}
-                      className="w-full glass-dark border border-gray-600/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all resize-none placeholder:text-gray-400"
-                      placeholder="Hello Dami, I'd like to talk about..."
-                    />
-                  </div>
-
-                  <motion.button
-                    type="submit"
-                    disabled={formStatus.loading}
-                    className="btn-modern w-full bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 disabled:from-gray-500 disabled:to-gray-600 disabled:cursor-not-allowed rounded-lg py-3 font-medium flex items-center justify-center gap-2 transition-all hover:shadow-lg hover:shadow-green-500/25"
-                    whileHover={!formStatus.loading ? { scale: 1.02 } : {}}
-                    whileTap={!formStatus.loading ? { scale: 0.98 } : {}}
-                  >
-                    <FaPaperPlane className={formStatus.loading ? 'animate-pulse' : ''} />
-                    {formStatus.loading ? 'Sending...' : 'Send Message'}
-                  </motion.button>
-                </form>
-              )}
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
+const reveal = {
+    hidden: { opacity: 0, y: 26 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.2, 0.7, 0.2, 1] as const } },
 };
 
-export default Contact;
+export default function Contact() {
+    const [submitted, setSubmitted] = useState(false);
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setSubmitted(true);
+        e.currentTarget.reset();
+        setTimeout(() => setSubmitted(false), 4000);
+    };
+
+    return (
+        <section id="contact" className="mx-auto max-w-[1100px] px-5 py-[70px] sm:px-8 md:px-16 md:py-[130px]">
+            <motion.div
+                className="mb-[54px] text-center"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={reveal}
+            >
+                <span className="font-heading text-[14px] font-bold uppercase tracking-[0.12em]" style={{ color: "#ec4899" }}>
+                    Contact
+                </span>
+                <h2 className="font-heading m-0 my-[14px] text-[34px] font-bold leading-[1.02] tracking-tight md:text-[60px]">
+                    Let&apos;s build something.
+                </h2>
+                <p className="mx-auto mb-0 max-w-[46ch] text-[18px] font-medium leading-[1.6]" style={{ color: "var(--muted)" }}>
+                    Always open to collaborations, opportunities, or just a friendly hello.
+                </p>
+            </motion.div>
+
+            <div className="grid items-start gap-8 md:grid-cols-[0.85fr_1.15fr] md:gap-[60px]">
+                <motion.div
+                    className="flex flex-col gap-[14px]"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.3 }}
+                    variants={reveal}
+                >
+                    <a
+                        href="mailto:oluwadamilolaogunbode@gmail.com"
+                        className="flex flex-col gap-1 rounded-[18px] p-[22px] no-underline transition-colors"
+                        style={{ background: "var(--soft)" }}
+                    >
+                        <span className="text-[13px] font-bold uppercase tracking-[0.08em]" style={{ color: "#4f46e5" }}>
+                            Email
+                        </span>
+                        <span className="break-all text-[16px] font-semibold" style={{ color: "var(--ink)" }}>
+                            oluwadamilolaogunbode@gmail.com
+                        </span>
+                    </a>
+                    <div className="flex flex-col gap-1 rounded-[18px] p-[22px]" style={{ background: "var(--soft)" }}>
+                        <span className="text-[13px] font-bold uppercase tracking-[0.08em]" style={{ color: "#ec4899" }}>
+                            Location
+                        </span>
+                        <span className="text-[16px] font-semibold" style={{ color: "var(--ink)" }}>
+                            Maryland, USA
+                        </span>
+                    </div>
+                    <div className="mt-1 flex flex-wrap gap-3">
+                        {socials.map((s) => (
+                            <a
+                                key={s.label}
+                                href={s.href}
+                                target="_blank"
+                                rel="noopener"
+                                aria-label={s.label}
+                                className="flex h-[46px] w-[46px] items-center justify-center rounded-[14px] border-[1.5px] transition-transform hover:-translate-y-0.5"
+                                style={{ color: "var(--ink)", borderColor: "var(--line2)" }}
+                            >
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d={s.path} />
+                                </svg>
+                            </a>
+                        ))}
+                    </div>
+                </motion.div>
+
+                <motion.form
+                    onSubmit={handleSubmit}
+                    className="grid gap-4 rounded-[24px] border p-6 sm:p-9"
+                    style={{ background: "var(--card)", borderColor: "var(--line)", boxShadow: "0 1px 2px rgba(22,21,26,0.04)" }}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.3 }}
+                    variants={reveal}
+                >
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <label className="flex flex-col gap-2 text-[13px] font-bold" style={{ color: "var(--body)" }}>
+                            Name
+                            <input
+                                type="text"
+                                placeholder="Your name"
+                                required
+                                className="rounded-xl border-[1.5px] px-[15px] py-[13px] text-[15px] outline-none"
+                                style={{ borderColor: "var(--line2)", background: "var(--input)", color: "var(--ink)" }}
+                            />
+                        </label>
+                        <label className="flex flex-col gap-2 text-[13px] font-bold" style={{ color: "var(--body)" }}>
+                            Email
+                            <input
+                                type="email"
+                                placeholder="you@email.com"
+                                required
+                                className="rounded-xl border-[1.5px] px-[15px] py-[13px] text-[15px] outline-none"
+                                style={{ borderColor: "var(--line2)", background: "var(--input)", color: "var(--ink)" }}
+                            />
+                        </label>
+                    </div>
+                    <label className="flex flex-col gap-2 text-[13px] font-bold" style={{ color: "var(--body)" }}>
+                        Message
+                        <textarea
+                            rows={5}
+                            placeholder="Tell me about your idea…"
+                            required
+                            className="resize-vertical rounded-xl border-[1.5px] px-[15px] py-[13px] text-[15px] outline-none"
+                            style={{ borderColor: "var(--line2)", background: "var(--input)", color: "var(--ink)" }}
+                        />
+                    </label>
+                    <button
+                        type="submit"
+                        className="font-heading rounded-[14px] border-none p-4 text-[16px] font-bold text-white transition-transform hover:-translate-y-0.5"
+                        style={{ background: "#4f46e5", boxShadow: "0 10px 26px -8px rgba(79,70,229,0.6)" }}
+                    >
+                        {submitted ? "Thanks — I'll be in touch! ✓" : "Send message"}
+                    </button>
+                </motion.form>
+            </div>
+
+            <motion.div
+                className="mt-10 text-center"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={reveal}
+            >
+                <a
+                    href="https://dammyog.net/resume.pdf"
+                    target="_blank"
+                    rel="noopener"
+                    className="inline-flex items-center gap-[10px] rounded-full px-[26px] py-[14px] text-[15px] font-bold no-underline"
+                    style={{ color: "var(--ink)", background: "var(--soft)" }}
+                >
+                    ↓ Download my résumé
+                </a>
+            </motion.div>
+        </section>
+    );
+}

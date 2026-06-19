@@ -1,149 +1,45 @@
-"use client"
-import Education from "@/components/education";
-import Footer from "@/components/footer";
-import ProjectsSlider from "@/components/projects";
-import Contact from "@/components/contact";
+"use client";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/navbar";
-import { motion } from "framer-motion";
-import { TypeAnimation } from "react-type-animation";
-import { useEffect, useRef } from "react";
-import { FaChevronDown } from "react-icons/fa";
+import Hero from "@/components/hero";
+import Marquee from "@/components/marquee";
+import About from "@/components/about";
+import Skills from "@/components/skills";
+import Education from "@/components/education";
+import Projects from "@/components/projects";
+import Contact from "@/components/contact";
+import Footer from "@/components/footer";
 
 export default function Home() {
-    // Ref for scroll-down button
-    const scrollRef = useRef<HTMLDivElement>(null);
+    const [isDark, setIsDark] = useState(false);
 
-    // Handle scroll-down button click
-    const handleScrollDown = () => {
-        const educationSection = document.getElementById('education');
-        if (educationSection) {
-            educationSection.scrollIntoView({ behavior: 'smooth' });
+    useEffect(() => {
+        setIsDark(document.documentElement.getAttribute("data-theme") === "dark");
+    }, []);
+
+    const toggleTheme = () => {
+        const next = !isDark;
+        setIsDark(next);
+        if (next) document.documentElement.setAttribute("data-theme", "dark");
+        else document.documentElement.removeAttribute("data-theme");
+        try {
+            localStorage.setItem("dami-theme", next ? "dark" : "light");
+        } catch {
+            // localStorage unavailable
         }
     };
 
-    // Handle initial animations
-    const fadeInUp = {
-        hidden: { opacity: 0, y: 30 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
-    };
-
     return (
-        <>
-            <Navbar />
-            <main className="gradient-bg min-h-screen w-full font-[family-name:var(--font-geist-sans)]">
-                {/* Hero Section */}
-                <section id="home" className="min-h-screen pt-16 sm:pt-20 flex flex-col justify-center relative">
-                    <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-20">
-                        <motion.div
-                            className="max-w-4xl mx-auto text-center"
-                            initial="hidden"
-                            animate="visible"
-                            variants={fadeInUp}
-                        >
-                            <motion.div
-                                className="mb-6 sm:mb-8 inline-block p-2 bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-lg"
-                                initial={{ scale: 0, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                transition={{ delay: 0.5, duration: 0.5 }}
-                            >
-                                <img
-                                    src="/images/dami.png"
-                                    alt="Dami Profile"
-                                    className="w-32 h-32 sm:w-36 sm:h-36 md:w-48 md:h-48 rounded-full object-cover border-4 border-green-500/30"
-                                />
-                            </motion.div>
-
-                            <motion.h1
-                                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6"
-                                variants={fadeInUp}
-                            >
-                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-blue-400">
-                                    Hi, I'm Dami.
-                                </span>
-                            </motion.h1>
-
-                            <motion.div
-                                className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-300 mb-6 sm:mb-8"
-                                variants={fadeInUp}
-                            >
-                                <TypeAnimation
-                                    sequence={[
-                                        "Passionate Full Stack Developer",
-                                        2000,
-                                        "Computer Science Student",
-                                        2000,
-                                        "Problem Solver",
-                                        2000,
-                                        "Creative Thinker",
-                                        2000,
-                                    ]}
-                                    speed={50}
-                                    repeat={Infinity}
-                                    className="min-h-[1.5em]"
-                                />
-                            </motion.div>
-
-                            <motion.p
-                                className="text-base sm:text-lg text-gray-400 mb-8 sm:mb-10 max-w-2xl mx-auto px-4"
-                                variants={fadeInUp}
-                            >
-                                I build modern, responsive web applications with a focus on clean code,
-                                intuitive user experiences, and cutting-edge technologies.
-                            </motion.p>
-
-                            <motion.div
-                                className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 px-4"
-                                variants={fadeInUp}
-                            >
-                                <a
-                                    href="#contact"
-                                    className="btn-modern px-6 py-3 bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 
-                                            text-white font-medium rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25 text-center hover:-translate-y-1"
-                                >
-                                    Get in Touch
-                                </a>
-                                <a
-                                    href="#projects"
-                                    className="btn-modern px-6 py-3 glass-dark hover:bg-gray-700/30 text-white font-medium 
-                                            rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 text-center hover:-translate-y-1"
-                                >
-                                    View Projects
-                                </a>
-                            </motion.div>
-                        </motion.div>
-                    </div>
-
-                    {/* Scroll down indicator */}
-                    <motion.div
-                        ref={scrollRef}
-                        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer"
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1.5, duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-                        onClick={handleScrollDown}
-                    >
-                        <FaChevronDown className="text-green-400 text-3xl" />
-                    </motion.div>
-                </section>
-
-                {/* Education Section */}
-                <section id="education" className="py-20 md:py-32">
-                    <Education />
-                </section>
-
-                {/* Projects Section */}
-                <section id="projects" className="py-20 md:py-32">
-                    <ProjectsSlider />
-                </section>
-
-                {/* Contact Section */}
-                <section id="contact" className="py-20 md:py-32 bg-[#080c10]">
-                    <Contact />
-                </section>
-
-                {/* Footer */}
-                <Footer />
-            </main>
-        </>
+        <div id="site" style={{ background: "var(--bg)", color: "var(--ink)", minHeight: "100vh" }}>
+            <Navbar isDark={isDark} toggleTheme={toggleTheme} />
+            <Hero />
+            <Marquee />
+            <About />
+            <Skills />
+            <Education />
+            <Projects />
+            <Contact />
+            <Footer />
+        </div>
     );
 }

@@ -1,184 +1,74 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaBars, FaTimes, FaHome, FaGraduationCap, FaCode, FaEnvelope, FaFileAlt } from 'react-icons/fa';
+"use client";
+import React from "react";
 
-interface NavLinkProps {
-    href: string;
-    label: string;
-    icon: React.ReactNode;
-    onClick: () => void;
-    isActive: boolean;
+interface NavbarProps {
+    isDark: boolean;
+    toggleTheme: () => void;
 }
 
-const NavLink: React.FC<NavLinkProps> = ({ href, label, icon, onClick, isActive }) => {
+const links = [
+    { href: "#about", label: "About" },
+    { href: "#projects", label: "Projects" },
+    { href: "#education", label: "Education" },
+    { href: "#contact", label: "Contact" },
+];
+
+const Navbar: React.FC<NavbarProps> = ({ toggleTheme }) => {
     return (
-        <a
-            href={href}
-            onClick={(e) => {
-                e.preventDefault();
-                onClick();
-                // Smooth scroll to section
-                const element = document.getElementById(href.substring(1));
-                if (element) {
-                    window.scrollTo({
-                        top: element.offsetTop - 80, // Offset for navbar height
-                        behavior: 'smooth'
-                    });
-                }
-            }}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all duration-300 ${isActive
-                ? 'bg-gradient-to-r from-green-600/20 to-blue-600/20 text-green-400 font-medium'
-                : 'hover:bg-gray-800/50 text-gray-300 hover:text-white'
-                }`}
+        <nav
+            className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between border-b backdrop-blur-md px-5 py-4 sm:px-8 md:px-16"
+            style={{ background: "var(--nav)", borderColor: "var(--line)" }}
         >
-            <span>{icon}</span>
-            <span>{label}</span>
-        </a>
-    );
-};
-
-const Navbar: React.FC = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [activeSection, setActiveSection] = useState('home');
-    const [isScrolled, setIsScrolled] = useState(false);
-
-    // Navigation links
-    const navLinks = [
-        { id: 'home', href: '#home', label: 'Home', icon: <FaHome /> },
-        { id: 'education', href: '#education', label: 'Education', icon: <FaGraduationCap /> },
-        { id: 'projects', href: '#projects', label: 'Projects', icon: <FaCode /> },
-        { id: 'contact', href: '#contact', label: 'Contact', icon: <FaEnvelope /> }
-    ];
-
-    // Handle scroll event to change navbar appearance and detect active section
-    useEffect(() => {
-        const handleScroll = () => {
-            // Change navbar style on scroll
-            setIsScrolled(window.scrollY > 20);
-
-            // Determine which section is currently in view
-            const sections = navLinks.map(link => document.getElementById(link.id));
-
-            // Find the current active section
-            sections.forEach((section, index) => {
-                if (section) {
-                    const rect = section.getBoundingClientRect();
-                    const isInView = rect.top <= 150 && rect.bottom >= 150;
-
-                    if (isInView) {
-                        setActiveSection(navLinks[index].id);
-                    }
-                }
-            });
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [navLinks]);
-
-    // Toggle mobile menu
-    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-    // Close mobile menu when a link is clicked
-    const handleLinkClick = () => {
-        setIsMenuOpen(false);
-    };
-
-    return (
-        <motion.header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'py-3 glass-dark shadow-lg shadow-black/20' : 'py-5 bg-transparent'
-                }`}
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.5 }}
-        >
-            <div className="container mx-auto px-4 flex justify-between items-center">
-                {/* Logo */}
-                <a
-                    href="#home"
-                    className="text-white font-bold text-xl md:text-2xl bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-blue-400"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                        handleLinkClick();
-                    }}
-                >
-                    Dammyog.net
-                </a>
-
-                {/* Desktop Navigation */}
-                <nav className="hidden md:flex items-center space-x-1">
-                    {navLinks.map((link) => (
-                        <NavLink
-                            key={link.id}
-                            href={link.href}
-                            label={link.label}
-                            icon={link.icon}
-                            onClick={() => handleLinkClick()}
-                            isActive={activeSection === link.id}
-                        />
-                    ))}
-
-                    {/* Resume Button */}
+            <a
+                href="#home"
+                className="font-heading flex items-center gap-2 text-[19px] font-bold tracking-tight no-underline"
+                style={{ color: "var(--ink)" }}
+            >
+                <span
+                    className="inline-block h-[11px] w-[11px] rounded-[3px]"
+                    style={{ background: "#4f46e5", boxShadow: "6px 0 0 #ec4899, 12px 0 0 #f59e0b" }}
+                />
+                dammyog.net
+            </a>
+            <div className="flex items-center gap-4 sm:gap-6 md:gap-8">
+                {links.map((l) => (
                     <a
-                        href="/resume.pdf"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-modern ml-2 flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 rounded-lg text-white transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25"
+                        key={l.href}
+                        href={l.href}
+                        className="hidden text-[15px] font-semibold no-underline transition-colors sm:inline hover:opacity-80"
+                        style={{ color: "var(--muted)" }}
                     >
-                        <FaFileAlt />
-                        <span>Resume</span>
+                        {l.label}
                     </a>
-                </nav>
-
-                {/* Mobile Menu Button */}
+                ))}
                 <button
-                    className="md:hidden text-white p-2 focus:outline-none"
-                    onClick={toggleMenu}
-                    aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+                    onClick={toggleTheme}
+                    aria-label="Toggle dark mode"
+                    className="relative h-7 w-[52px] flex-none cursor-pointer rounded-full border-[1.5px] p-0"
+                    style={{ background: "var(--soft)", borderColor: "var(--line2)" }}
                 >
-                    {isMenuOpen ? <FaTimes className="text-xl" /> : <FaBars className="text-xl" />}
+                    <span className="absolute left-[7px] top-1/2 -translate-y-1/2 text-[11px] leading-none" style={{ color: "#f59e0b" }}>
+                        ☀
+                    </span>
+                    <span className="absolute right-[7px] top-1/2 -translate-y-1/2 text-[11px] leading-none" style={{ color: "var(--muted)" }}>
+                        ☾
+                    </span>
+                    <span
+                        className="theme-knob absolute left-[2px] top-[2px] h-[22px] w-[22px] rounded-full"
+                        style={{ background: "var(--btn-solid)", boxShadow: "0 1px 4px rgba(0,0,0,0.35)" }}
+                    />
                 </button>
+                <a
+                    href="https://dammyog.net/resume.pdf"
+                    target="_blank"
+                    rel="noopener"
+                    className="rounded-full px-[18px] py-[10px] text-[14px] font-bold no-underline transition-transform hover:-translate-y-0.5"
+                    style={{ background: "var(--btn-solid)", color: "var(--btn-solid-text)" }}
+                >
+                    Resume
+                </a>
             </div>
-
-            {/* Mobile Navigation Menu */}
-            <AnimatePresence>
-                {isMenuOpen && (
-                    <motion.div
-                        className="md:hidden fixed inset-0 glass-dark pt-20 px-4 overflow-y-auto"
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.3 }}
-                    >
-                        <nav className="flex flex-col space-y-3">
-                            {navLinks.map((link) => (
-                                <NavLink
-                                    key={link.id}
-                                    href={link.href}
-                                    label={link.label}
-                                    icon={link.icon}
-                                    onClick={() => handleLinkClick()}
-                                    isActive={activeSection === link.id}
-                                />
-                            ))}
-
-                            {/* Resume Button (Mobile) */}
-                            <a
-                                href="/resume.pdf"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="btn-modern flex items-center gap-2 px-4 py-3 mt-2 bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 rounded-lg text-white transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25"
-                                onClick={handleLinkClick}
-                            >
-                                <FaFileAlt />
-                                <span>Download Resume</span>
-                            </a>
-                        </nav>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </motion.header>
+        </nav>
     );
 };
 

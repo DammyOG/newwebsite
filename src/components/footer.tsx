@@ -1,52 +1,66 @@
-"use client";
-import React, { useRef, useEffect } from "react";
-import { motion, useAnimation } from "framer-motion";
-import { useInView } from "@/hooks/useInView";
-import SocialPage from "./socialpage";
+import React from "react";
 
-const slideInUp = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 1.2 } },
-};
+const socials = [
+    {
+        label: "LinkedIn",
+        href: "https://www.linkedin.com/in/dammyog/",
+        path: "M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z",
+    },
+    {
+        label: "GitHub",
+        href: "https://github.com/DammyOG",
+        path: "M12 .5C5.37.5 0 5.78 0 12.29c0 5.2 3.44 9.6 8.21 11.16.6.1.82-.25.82-.56v-2.17c-3.34.71-4.04-1.59-4.04-1.59-.55-1.37-1.34-1.73-1.34-1.73-1.09-.73.08-.72.08-.72 1.2.08 1.84 1.21 1.84 1.21 1.07 1.8 2.81 1.28 3.5.98.1-.76.42-1.28.76-1.57-2.67-.3-5.47-1.31-5.47-5.84 0-1.29.47-2.34 1.24-3.17-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.21a11.6 11.6 0 0 1 6.01 0c2.29-1.53 3.3-1.21 3.3-1.21.65 1.66.24 2.88.12 3.18.77.83 1.23 1.88 1.23 3.17 0 4.54-2.8 5.54-5.48 5.83.43.36.81 1.09.81 2.2v3.26c0 .31.21.67.82.56A12.01 12.01 0 0 0 24 12.29C24 5.78 18.63.5 12 .5z",
+    },
+    {
+        label: "Twitter",
+        href: "https://twitter.com/Dammy0G",
+        path: "M23.95 4.57a10 10 0 0 1-2.83.78 4.94 4.94 0 0 0 2.17-2.72c-.95.56-2 .97-3.13 1.19a4.92 4.92 0 0 0-8.39 4.49A13.97 13.97 0 0 1 1.64 3.16a4.92 4.92 0 0 0 1.52 6.57c-.8-.03-1.55-.25-2.21-.61v.06a4.93 4.93 0 0 0 3.95 4.83c-.71.19-1.45.22-2.17.08a4.93 4.93 0 0 0 4.6 3.42A9.88 9.88 0 0 1 0 19.54a13.94 13.94 0 0 0 7.55 2.21c9.05 0 14-7.5 14-14v-.64c.96-.7 1.8-1.56 2.46-2.54z",
+    },
+    {
+        label: "Instagram",
+        href: "https://www.instagram.com/_dammyog",
+        path: "M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.43-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07zm0 1.62c-3.15 0-3.52.01-4.76.07-.9.04-1.39.19-1.71.32-.43.17-.74.37-1.06.69-.32.32-.52.63-.69 1.06-.13.32-.28.81-.32 1.71-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.04.9.19 1.39.32 1.71.17.43.37.74.69 1.06.32.32.63.52 1.06.69.32.13.81.28 1.71.32 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c.9-.04 1.39-.19 1.71-.32.43-.17.74-.37 1.06-.69.32-.32.52-.63.69-1.06.13-.32.28-.81.32-1.71.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.04-.9-.19-1.39-.32-1.71a2.85 2.85 0 0 0-.69-1.06 2.85 2.85 0 0 0-1.06-.69c-.32-.13-.81-.28-1.71-.32-1.24-.06-1.61-.07-4.76-.07zm0 2.76a5.46 5.46 0 1 1 0 10.92 5.46 5.46 0 0 1 0-10.92zm0 1.62a3.84 3.84 0 1 0 0 7.68 3.84 3.84 0 0 0 0-7.68zm5.65-2.87a1.28 1.28 0 1 1 0 2.56 1.28 1.28 0 0 1 0-2.56z",
+    },
+];
 
-const Footer: React.FC = () => {
-    const footerRef = useRef<HTMLDivElement>(null);
-    const isFooterInView = useInView(footerRef);
-    const footerControls = useAnimation();
-
-    useEffect(() => {
-        if (isFooterInView) {
-            footerControls.start("visible");
-        } else {
-            footerControls.start("hidden");
-        }
-    }, [isFooterInView, footerControls]);
-
+export default function Footer() {
     return (
-        <footer
-            id="contact"
-            className="py-8 px-4"
-        >
-            <div className="container mx-auto max-w-5xl">
-                <motion.div
-                    ref={footerRef}
-                    initial="hidden"
-                    animate={footerControls}
-                    variants={slideInUp}
+        <footer className="px-5 pb-10 pt-12 sm:px-8 md:px-16 md:pt-20" style={{ background: "#16151a", color: "#fff" }}>
+            <div className="mx-auto flex max-w-[1100px] flex-wrap items-center justify-between gap-6">
+                <a
+                    href="#home"
+                    className="font-heading flex items-center gap-[9px] text-[18px] font-bold tracking-tight text-white no-underline"
                 >
-                    {/* Social Links Section */}
-                    <SocialPage />
-
-                    {/* Footer Text */}
-                    <div className="text-center mt-6">
-                        <p className="text-sm text-gray-400">
-                            &copy; 2024 Oluwadamilola Ogunbode. All Rights Reserved.
-                        </p>
-                    </div>
-                </motion.div>
+                    <span
+                        className="inline-block h-[11px] w-[11px] rounded-[3px]"
+                        style={{ background: "#4f46e5", boxShadow: "6px 0 0 #ec4899, 12px 0 0 #f59e0b" }}
+                    />
+                    dammyog.net
+                </a>
+                <div className="flex flex-wrap items-center gap-4">
+                    {socials.map((s) => (
+                        <a
+                            key={s.label}
+                            href={s.href}
+                            target="_blank"
+                            rel="noopener"
+                            aria-label={s.label}
+                            className="flex transition-transform hover:-translate-y-0.5"
+                            style={{ color: "#b6b3c2" }}
+                        >
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d={s.path} />
+                            </svg>
+                        </a>
+                    ))}
+                </div>
+            </div>
+            <div
+                className="mx-auto mt-7 max-w-[1100px] border-t pt-6 text-[13px] font-medium"
+                style={{ borderColor: "#2c2a33", color: "#7d7a88" }}
+            >
+                © 2026 Oluwadamilola Ogunbode. All rights reserved.
             </div>
         </footer>
     );
-};
-
-export default Footer;
+}
